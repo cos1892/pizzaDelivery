@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html  ng-app="pizzaApp" lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel='stylesheet' href='public/css/style.css' />
+    <link rel='stylesheet' href='public/bootstrap-3.3.6-dist/css/bootstrap.min.css' />
+	<script src="node_modules/angular/angular.min.js"></script>
+	<script src="node_modules/angular-ui-router/release/angular-ui-router.js"></script>
+	<script src="./client.js"></script>
+	<script src="./homeController.js"></script>
+	<script src="pizza/pizzaController.js"></script>
+	<script src="pizza/drinksController.js"></script>
+	<script src="pizza/saladsController.js"></script>
+	<script src="pizza/soupsController.js"></script>
+	<script src="pizza/hotDishesController.js"></script>
+	<script src="pizza/breakfastsController.js"></script>
+	<script src="pizza/dessertsController.js"></script>
+	<script src="pizza/fitnessController.js"></script>
+	<script src="pizza/basketController.js"></script>
+	<script src="pizza/pizzaService.js"></script>
+	<title>Delivery</title>
+</head>
+<body>
+<header>
+    <h1>Delivery Pizza</h1>
+</header>
+</div>
+<div class="menu">
+	<ul>
+		<li><a ui-sref="pizza"><img src="public/img/menu/pizza.png" alt="Pizza">Pizza</a></li>
+		<li><a ui-sref="salads"><img src="public/img/menu/salati.png" alt="Salads, appetizers">Salads, appetizers</a></li>
+		<li><a ui-sref="soups"><img src="public/img/menu/supy.png" alt="Soups and lunches">Soups and lunches</a></li>
+		<li><a ui-sref="hotDishes"><img src="public/img/menu/secondbliuda.png" alt="Hot dishes">Hot dishes</a></li>
+		<li><a ui-sref="drinks"><img src="public/img/menu/napitki.png" alt="Drinks">Drinks</a></li>
+		<li><a ui-sref="breakfasts"><img src="public/img/menu/zavtraki.png" alt="Breakfasts">Breakfasts</a></li>
+		<li><a ui-sref="desserts"><img src="public/img/menu/desertu.png" alt="Desserts, bread">Desserts, bread</a></li>
+		<li><a ui-sref="fitness"><img src="public/img/menu/fitness.png" alt="Fitness menu">Fitness menu</a></li>
+	</ul>
+</div>
+<div id="basket_placeholder">
+	<div class="basket" ng-controller = "BasketController">
+		<div class="basketIn" ng-if="basket">
+			<div class="top">
+				<h3><a class="openClose">Корзина заказа</a> <a class="open" ng-click="basketFull()" ng-class = "{'close': !open}"></a></h3>
+				<div class="sumAll">
+					<div>Всего товаров:</div>
+					<div class="tov">{{sumCount}}</div>
+					<div class="onSum">На сумму:</div>
+					<div class="sum"><span class="price_byn">{{coast}} rub.</span></div>
+				</div>
+			</div>
+			<div class="middle" ng-if="open">
+				<div class="items">
+					<div ng-repeat = "arr in basketArray">
+					<div class="itemBasket" ng-repeat = "product in arr">
+						<div class="img">
+							<img ng-src="{{product.imgUrl}}" title="{{product.name}}">
+						</div>
+						<a ng-click="deleteFromBasket(product._id)" class="del" title="Удалить из заказа"></a>
+						<div class="padding">
+								<div class="title">{{product.name}}<span> &nbsp;</span></div>
+								<div class="summInput">
+									<span class="price">
+										<span class="price_byr">{{product.coast}} rub.</span>
+									</span>
+									<div class="count visible ">
+										<input type="text" value="{{product.count}}" maxlength="2"> <span>&nbsp;шт.</span>
+										<div ng-click = "inc(product._id, product.count)" class="inc countButton"></div>
+	                            		<div ng-click = "dec(product._id, product.count)" class="dec countButton"></div>
+									</div>
+									<span class="sum_price">
+										<span class="price_byr">{{product.sumCoast}} rub.</span>
+									</span>
+								</div>
+						</div>
+					</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="containerMain">
+	<ui-view></ui-view>
+</div>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<div class="contentOut">
+    <div class="pageTittle">
+            <h1>Menu - Pizza</h1>
+        </div>
+
+    <form id="pickup_pizza" name="pickUpPizza" ng-submit="submit()">
+        <div class="pickUp">
+            <div class="pizzaType">
+                <div class="title">Type:</div>
+                <label class="normal"><input type="checkbox" ng-click="selectType('normal')"> Normal</label>
+                <label class="vegan"><input type="checkbox" ng-click="selectType('vegetarian')"> Vegetarian</label>
+                <label class="chili"><input type="checkbox" ng-click="selectType('spicy')"> Spicy</label>
+            </div>
+            <div class="pizzaChars">
+                <div class="pizzaPrice">
+                    <div class="title">Coast:</div>
+                    <p>от <input type="text" class="pizzaPriceMin" ng-init="user.price_from=2.6" maxlength="4" ng-model="user.price_from">&nbsp;<span class="pizzaPriceMinBYN">{{user.price_from}}</span></p>
+                    <p>до <input type="text" class="pizzaPriceMax" ng-init="user.price_to=33.1" maxlength="4" ng-model="user.price_to">&nbsp;<span class="pizzaPriceMaxBYN">{{user.price_to}}</span></p>
+                </div>
+                <div class="pizzaSize">
+                    <div class="title">Size:</div>
+                    <div class="pizzaDiameter">
+                        <p><label class=""><input type="checkbox" ng-click="selectSize('children')"> children's, 18 sm.</label></p>
+                        <p><label class=""><input type="checkbox" ng-click="selectSize('small')"> small, 26 sm.</label></p>
+                        <p><label class=""><input type="checkbox" ng-click="selectSize('big')"> big, 31 sm.</label></p>
+                        <p><label class=""><input type="checkbox" ng-click="selectSize('family')"> family, 45 sm.</label></p>
+                    </div>
+                </div>
+            </div>
+            <div class="pizzaIngredients">
+                <div class="title">Ingredeents:</div>
+                <div class="column">
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('onion')" value="1"> Without onion</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('garlic')" value="2"> Without garlic</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('bacon')" value="3"> Bacon</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('ham')" value="4"> Ham</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('beef')" value="5"> Beef</label></p>
+                    </div>
+                <div class="column">
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('mushrooms')" value="6"> Mushrooms</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('chiken')" value="7"> Chiken</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('salmon|shrimp|capers')" value="8"> Fish and seafood</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('salami')" value="9"> Salami</label></p>
+                    <p><label class=""><input type="checkbox" ng-click="selectIngredeents('pork')" value="10"> Pork</label></p>
+                </div>
+            </div>
+            <div class="clear"></div>
+            <div class="pizzaResults">
+                <div class="in">
+                    <div class="title">Найдено пицц:</div><div class="count"><span id="count_pizza">{{count}}</span></div>
+                    <input id="getResultPickup" type="submit" value="Search" class="showResultButton">
+                    <a ui-sref="pizza" id="resetForm" class="reset">Очистить фильтр</a>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </form>
+        
+        <div class="content">
+        <div class="notFound" ng-if="errMessage">
+            <h1>The search has not given any results!</h1>
+        </div>
+            <div class="item" ng-if="errMessage===false" ng-repeat="pizza in pizzas" >
+                <h3><span>{{pizza.name}}</span></h3>
+                <div class="photoPizza">
+                    <img ng-src="{{pizza.imgUrl}}">
+                    <span ng-class="{'mask1': isMaskNormal(pizza.type),
+                                    'mask2': isMaskVegetarian(pizza.type),
+                                    'mask3': isMaskSpicy(pizza.type)}">
+                                    </span>
+                </div> 
+                <div class="descriptionPizza">
+                    <div class="descriptionHolder">
+                        <div class="children">
+                            <div class="name">Children's</div>
+                            <div class="size">
+                                {{pizza.children.diameter}} sm, {{pizza.children.weight}} g.
+                            </div>
+                            <div class="coast">
+                                {{pizza.children.coast}} rub
+                            </div>
+                        </div>
+                        <div class="small">
+                            <div class="name">Small</div>
+                            <div class="size">
+                                {{pizza.small.diameter}} sm, {{pizza.small.weight}} g.
+                            </div>
+                            <div class="coast">
+                                {{pizza.small.coast}} rub
+                            </div>
+                        </div>
+                        <div class="big">
+                            <div class="name">Big</div>
+                            <div class="size">
+                                {{pizza.big.diameter}} sm, {{pizza.big.weight}} g.
+                            </div>
+                            <div class="coast">
+                                {{pizza.big.coast}} rub
+                            </div>
+                        </div>
+                        <div class="family">
+                            <div class="name">Family</div>
+                            <div class="size">
+                                {{pizza.family.diameter}} sm, {{pizza.family.weight}} g.
+                            </div>
+                            <div class="coast">
+                                {{pizza.family.coast}} rub
+                            </div>
+                        </div>
+                    </div>
+                    <div class="compositionHolder">
+                        <b ng-repeat="composition in pizza.composition">{{composition}}, </b>
+                    </div>
+                </div>
+                <div class="buttonPizza">
+                    <button type="button" class="btn btn-danger">Add to basket</button>
+                </div> 
+            </div>       
+        </div>
+        <!-- кнопки навигации по страницам -->
+        <div class="pageNumber">
+            <button ng-repeat="i in getNumberAsArray(numberOfPages) track by $index" ng-click="setCurrentPage($index)">{{$index + 1}}</button>
+        </div>
+</div>

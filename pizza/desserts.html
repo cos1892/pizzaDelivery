@@ -1,0 +1,38 @@
+<div class="contentOut">
+    <div class="pageTittle">
+        <h1>Menu - Desserts, bread</h1>
+    </div>
+    <div class="content">
+        <div class="item" ng-repeat="dessert in desserts">
+            <h3><span>{{dessert.name}}</span></h3>
+            <div class="info">
+                <div class="photo">
+                    <img ng-src="{{dessert.imgUrl}}">
+                </div>
+                <div class="description">
+                    <div class="composition">
+                        <div class="leftColumn">
+                            <b ng-repeat="composition in dessert.composition">{{composition}}, </b>
+                            <div class="weight">
+                                <b>{{dessert.weight}}g.</b>
+                            </div>
+                        </div>
+                        <div class="rightColumn">
+                            <div class="count">
+                                <input type="text" ng-model="countProduct" ng-init="countProduct=1" class="products_count" maxlength="3"> шт.
+                            </div>
+                            <button type="button" ng-click="addBasket(dessert, countProduct)" class="btn btn-danger">Add to basket</button>
+                            <div class="coast">
+                                <b>{{dessert.coast}} rub.</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <!-- кнопки навигации по страницам -->
+    <div class="pageNumber">
+        <button ng-repeat="i in getNumberAsArray(numberOfPages) track by $index" ng-click="setCurrentPage($index)">{{$index + 1}}</button>
+    </div>
+</div>

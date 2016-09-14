@@ -1,0 +1,38 @@
+<div class="contentOut">
+    <div class="pageTittle">
+        <h1>Menu - Fitness</h1>
+    </div>
+    <div class="content">
+        <div class="item" ng-repeat="fit in fitness">
+            <h3><span>{{fit.name}}</span></h3>
+            <div class="info">
+                <div class="photo">
+                    <img ng-src="{{fit.imgUrl}}">
+                </div>
+                <div class="description">
+                    <div class="composition">
+                        <div class="leftColumn">
+                            <b ng-repeat="composition in fit.composition">{{composition}}, </b>
+                            <div class="weight">
+                                <b>{{fit.weight}}g.</b>
+                            </div>
+                        </div>
+                        <div class="rightColumn">
+                            <div class="count">
+                                <input type="text" ng-model="countProduct" ng-init="countProduct=1" class="products_count" maxlength="3"> шт.
+                            </div>
+                            <button type="button" ng-click="addBasket(fit, countProduct)" class="btn btn-danger">Add to basket</button>
+                            <div class="coast">
+                                <b>{{fit.coast}} rub.</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>        
+    </div>
+    <!-- кнопки навигации по страницам -->
+    <div class="pageNumber">
+        <button ng-repeat="i in getNumberAsArray(numberOfPages) track by $index" ng-click="setCurrentPage($index)">{{$index + 1}}</button>
+    </div>
+</div>
